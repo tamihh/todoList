@@ -21,7 +21,7 @@ class LoginForm extends Component {
 
 	handleChange(event) {
 		this.setState({
-			email: 'teste'
+			email: event.target.value
 		});
 		console.log(event.target.value);
 	}
@@ -34,6 +34,7 @@ class LoginForm extends Component {
 					<Input
 						placeholder="user@gmail.com"
 						label="Email"
+						value={this.state.email}
 						onChangeText={this.handleChange.bind(this)}
 					/>
 				</CardSection>
