@@ -69,7 +69,11 @@ class LoginForm extends Component {
 						placeholder="user@gmail.com"
 						label="Email"
 						value={this.state.email}
+<<<<<<< HEAD
 						onChangeText={this.handleChangeEmail.bind(this)}
+=======
+						onChangeText={this.handleChange.bind(this)}
+>>>>>>> 46056644098a05ff1db4497de363f10e618fab2b
 					/>
 				</CardSection>
 
