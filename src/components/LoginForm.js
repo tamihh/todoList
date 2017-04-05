@@ -1,40 +1,75 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'firebase';
-import { Button, Card, CardSection, Input } from './common';
+import { Button, Card, CardSection, Input, Spinner } from './common';
 
 class LoginForm extends Component {
 
-	state = { email: '', password: '', error: '' };
+	state = { email: '', password: '', error: '', loading: false };
 
 	onButtonPress() {
 		const { email, password } = this.state;
 
+		this.setState({ error: '', loading: true });
+
 		firebase.auth().signInWithEmailAndPassword(email, password)
+			.then(this.onLoginSucess.bind(this))
 			.catch(() => {
 				firebase.auth().createUserWithEmailAndPassword(email, password)
-					.catch(() => {
-						this.setState({ error: 'Authentication Faild.' })
-					})
-			})
+					.then(this.onLoginSucess.bind(this))
+					.catch(this.onLoginFail.bind(this))
+			});
 	}
 
-	handleChange(event) {
-		this.setState({
-			email: 'teste'
+	onLoginFail() {
+		this.setState({ 
+			error: 'Authentication Faild.',
+			loading: false
 		});
-		console.log(event.target.value);
+	}
+
+	onLoginSucess() {
+		this.setState({
+			email: '',
+			password: '',
+			loading: false,
+			error: ''
+		});
+	}
+
+	renderButton() {
+		if (this.state.loading) {
+			return <Spinner size="small" />
+		}
+
+		return (
+			<Button onPress={this.onButtonPress.bind(this)}>
+				Button
+			</Button>
+		);
+	}
+
+	handleChangeEmail(event) {
+		this.setState({
+			email: event.nativeEvent.text
+		});
+	}
+
+	handleChangePassword(event) {
+		this.setState({
+			password: event.nativeEvent.text
+		});
 	}
 
 	render() {
-
 		return (
 			<Card>
 				<CardSection>
 					<Input
 						placeholder="user@gmail.com"
 						label="Email"
-						onChangeText={this.handleChange.bind(this)}
+						value={this.state.email}
+						onChangeText={this.handleChangeEmail.bind(this)}
 					/>
 				</CardSection>
 
@@ -44,18 +79,16 @@ class LoginForm extends Component {
 						placeholder="password"
 						label="Password"
 						value={this.state.password}
-						onChangeText={(password) => this.setState({ password })}
+						onChangeText={this.handleChangePassword.bind(this)}
 					/>
 				</CardSection>
 
-				<Text>
+				<Text style={styles.errorTextStyle}>
 					{this.state.error}
 				</Text>
 
 				<CardSection >
-					<Button onPress={this.onButtonPress.bind(this)}>
-						Button
-					</Button>
+					{this.renderButton()}
 				</CardSection>
 
 			</Card>
