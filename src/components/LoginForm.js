@@ -22,7 +22,7 @@ class LoginForm extends Component {
 	}
 
 	onLoginFail() {
-		this.setState({ 
+		this.setState({
 			error: 'Authentication Faild.',
 			loading: false
 		});
@@ -63,25 +63,27 @@ class LoginForm extends Component {
 
 	render() {
 		return (
-			<Card>
+			<Card style={styles.loginCardStyle}>
+				<CardSection>
+					<Text style={styles.appTitleStyle} >
+						WHERE {"\n"}
+						DO YOU {"\n"}
+						WANNA EAT?
+					</Text>
+				</CardSection>
+
 				<CardSection>
 					<Input
-						placeholder="user@gmail.com"
-						label="Email"
+						label="EMAIL"
 						value={this.state.email}
-<<<<<<< HEAD
 						onChangeText={this.handleChangeEmail.bind(this)}
-=======
-						onChangeText={this.handleChange.bind(this)}
->>>>>>> 46056644098a05ff1db4497de363f10e618fab2b
 					/>
 				</CardSection>
 
 				<CardSection>
 					<Input
-						secureTextEntry 
-						placeholder="password"
-						label="Password"
+						secureTextEntry
+						label="PASSWORD"
 						value={this.state.password}
 						onChangeText={this.handleChangePassword.bind(this)}
 					/>
@@ -91,7 +93,7 @@ class LoginForm extends Component {
 					{this.state.error}
 				</Text>
 
-				<CardSection >
+				<CardSection>
 					{this.renderButton()}
 				</CardSection>
 
@@ -105,6 +107,22 @@ const styles = {
 		fontSize: 20,
 		alignSelf: 'center',
 		color: 'red'
+	},
+	appTitleStyle: {
+		color: '#000',
+		fontSize: 40,
+		lineHeight: 40,
+		fontWeight: 'bold',
+		textAlign: 'center',
+		flex: 1,
+		marginTop: 50,
+	},
+	loginCardStyle: {
+		flex: 1,
+		flexDirection: 'column',
+		flexWrap: 'wrap',
+		height: 100,
+		alignItems: 'space-between'
 	}
 };
 

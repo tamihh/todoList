@@ -13,7 +13,8 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => 
         autoCorrect={false}
         value={value}
         onChange={onChangeText}
-        style={styles.inputStyle}/>
+        style={styles.inputStyle}
+        multiline={true}/>
     </View>
   );
 };
@@ -22,22 +23,23 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => 
 const styles = {
   inputStyle: {
     color: '#000',
-    paddingRight: 5,
-    paddingLeft: 5,
-    fontSize: 18,
-    lineHeight: 23,
-    flex: 2
-  },
-  labelStyle: {
-    fontSize: 18,
-    paddingLeft: 20,
+    borderBottomWidth: 1,
+    borderColor: '#000',
+    fontSize: 16,
+    lineHeight: 45,
     flex: 1
   },
-  containerStyle: {
-    height: 40,
+  labelStyle: {
+    fontSize: 10,
+    color: '#ccc',
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
+  },
+  containerStyle: {
+    height: 50,
+    flex: 1,
+    marginTop: 20,
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   }
 }
 export { Input };

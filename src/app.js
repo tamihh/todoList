@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import firebase from 'firebase';
-import { Header, Button } from './components/common';
+import { Header, Card, Button, Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
 
 class App extends Component {
-	state = { loggedIn: false };
+	state = { loggedIn: null };
 
 	componentWillMount() {
 		firebase.initializeApp({
@@ -27,26 +27,36 @@ class App extends Component {
 	}
 
 	renderContent() {
-		if (this.state.loggedIn) {
-			return(
-				<Button>
-					Log out
-				</Button>
-			);
+		switch (this.state.loggedIn) {
+			case true:
+				return (
+					<Card>
+						<Button onPress={() => firebase.auth().signOut()}>Log Out</Button>
+					</Card>
+				);
+			case false:
+				return <LoginForm />;
+			default:
+				return <Spinner size="large" />;
 		}
-
-		return <LoginForm/>;
 	}
 
 
 
 	render() {
 		return (
-			<View>
+			<ScrollView style={styles.scroll}>
 				<Header thingsToShow="Todo List" />
 				{this.renderContent()}
-			</View>
+			</ScrollView>
 		);
+	}
+}
+
+const styles = {
+	scroll: {
+			backgroundColor: '#f1f1f1',
+			flexDirection: 'column'
 	}
 }
 
